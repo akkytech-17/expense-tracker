@@ -1,2 +1,70 @@
 # expense-tracker
 Python CLI app to track daily expenses
+import json
+import os
+from datetime import date
+
+FILE_NAME = "expenses.json"
+
+
+def load_expenses():
+    """File se purane kharche load karta hai."""
+    if os.path.exists(FILE_NAME):
+        with open(FILE_NAME, "r") as f:
+            return json.load(f)
+    return []
+
+
+def save_expenses(expenses):
+    """Saare kharche file me save karta hai."""
+    with open(FILE_NAME, "w") as f:
+        json.dump(expenses, f, indent=4)
+
+
+def add_expense(expenses):
+    """Naya kharcha add karta hai."""
+    # Amount lo (galat input par dobara poochho)
+    while True:
+        try:
+            amount = float(input("Amount kitna hai? "))
+            break
+        except ValueError:
+            print("Galat input! Sirf number likho.")
+
+    category = input("Category (Food/Travel/Shopping...): ")
+
+    # Date: khali chhodo to aaj ki date lagegi
+    date_input = input("Date (YYYY-MM-DD) ya Enter dabao aaj ke liye: ")
+    if date_input == "":
+        date_input = str(date.today())
+
+    expense = {
+        "amount": amount,
+        "category": category,
+        "date": date_input
+    }
+
+    expenses.append(expense)
+    save_expenses(expenses)
+    print("Kharcha add ho gaya!")
+
+
+def main():
+    expenses = load_expenses()
+
+    while True:
+        print("\n--- Expense Tracker ---")
+        print("1. Kharcha add karo")
+        print("2. Exit")
+        choice = input("Option chuno: ")
+
+        if choice == "1":
+            add_expense(expenses)
+        elif choice == "2":
+            print("Bye!")
+            break
+        else:
+            print("Galat option, dobara try karo.")
+
+
+main()
