@@ -21,7 +21,6 @@ def save_expenses(expenses):
 
 def add_expense(expenses):
     """Naya kharcha add karta hai."""
-    # Amount lo (galat input par dobara poochho)
     while True:
         try:
             amount = float(input("Amount kitna hai? "))
@@ -31,7 +30,6 @@ def add_expense(expenses):
 
     category = input("Category (Food/Travel/Shopping...): ")
 
-    # Date: khali chhodo to aaj ki date lagegi
     date_input = input("Date (YYYY-MM-DD) ya Enter dabao aaj ke liye: ")
     if date_input == "":
         date_input = str(date.today())
